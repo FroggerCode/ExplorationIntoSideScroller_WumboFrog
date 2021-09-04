@@ -67,7 +67,8 @@ public class PC1 : MonoBehaviour
             if (grounded)
             {
                 //jump!
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                //rb.velocity = new Vector2(rb.velocity.x, (jumpForce));
+                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 stoppedJumping = false;
             }
         }
@@ -79,7 +80,9 @@ public class PC1 : MonoBehaviour
             if (jumpTimeCounter > 0)
             {
                 //keep jumping!
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                //rb.velocity = new Vector2(rb.velocity.x, (jumpForce*jumpTimeCounter));
+                rb.AddForce(new Vector2(0, jumpForce*jumpTimeCounter));
+                
                 jumpTimeCounter -= Time.deltaTime;
             }
         }
@@ -90,6 +93,9 @@ public class PC1 : MonoBehaviour
         {
             //stop jumping and set your counter to zero.  The timer will reset once we touch the ground again in the update function.
             jumpTimeCounter = 0;
+         
+            
+            
             stoppedJumping = true;
         }
     }
@@ -106,14 +112,26 @@ public class PC1 : MonoBehaviour
         }
     }
 
+
     private void SideMovement()
     {
         float sideMovement = Input.GetAxis("Horizontal");
-        transform.position += new Vector3(sideMovement * movementSpeed, 0f);
+        if(grounded == true)
+        {
+            transform.position += new Vector3(sideMovement * movementSpeed, 0f);
+        }
+        else
+        {
+            transform.position += new Vector3(sideMovement * movementSpeed/2, 0f);
+        }
+        
     }
 
 
-
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(groundCheck.position, groundCheckRadius);
+    }
 
 
 }
