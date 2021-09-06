@@ -127,11 +127,11 @@ public class PC1 : MonoBehaviour
         
     }
 
-
-    void OnDrawGizmos()
-    {
-        Gizmos.DrawSphere(groundCheck.position, groundCheckRadius);
-    }
+    // Visualization of the player model
+    //void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawSphere(groundCheck.position, groundCheckRadius);
+    //}
 
 
 }
